@@ -63,7 +63,7 @@ merge of pre-approved built-in generic sensors and sensors added by the web
 application.
 
 ```javascript
-const accelArray = navigator.sensors.getSensors({filters:[{type:"accelerometer"}]);
+const accelArray = await navigator.sensors.getSensors({filters:[{type:"accelerometer"}]);
 ```
 
 ### Example #2: Registration
@@ -73,7 +73,6 @@ UNDER INVESTIGATION:
 TODO: Look into how e.g. Streams API can be used to provide high-bandwidth support
 for e.g. high speed accelerometers in parallel with CustomEvent support for 
 low-bandwidth sensors (geolocation, temperature, etc.).
-
 
 ## Generic Actuator
 Sensors only cover half of the interaction with the physical world.  Often
