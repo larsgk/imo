@@ -7,9 +7,10 @@ derivaties (e.g. https://www.w3.org/TR/orientation-sensor/) provide
 a great foundation for unified interaction with device sensors, finally!
 
 However, in my work with empiriKit (a science lab in a box) and with 
-hardware to web connectivity work done with industry partners, sensor 
-discovery - and even 'Generic Actuator' support - equally important
-in most cases.  With Web USB and Web Bluetooth, it will be possible
+hardware to web connectivity work done with industry partners, I strongly
+believe that sensor discovery - and even a potential 'Generic Actuator API' - would enable application developers to support many more real world scenarios.
+
+With Web USB and Web Bluetooth, it will be possible
 to attach/detach hardware and it would be natural to be able to register/deregister potential sensors (and actuators) dynamically.
 
 This doc will contain a small collection of cases and snippets as input
