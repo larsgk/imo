@@ -68,11 +68,56 @@ const accelArray = await navigator.sensors.getSensors({filters:[{type:"accelerom
 
 ### Example #2: Registration
 
-UNDER INVESTIGATION:
+// UNDER INVESTIGATION
 
 TODO: Look into how e.g. Streams API can be used to provide high-bandwidth support
 for e.g. high speed accelerometers in parallel with CustomEvent support for 
 low-bandwidth sensors (geolocation, temperature, etc.).
+
+(TBD: can be multi-purpose/combo)
+
+```javascript
+class MyWebUSBAccelSensor extends Accelerometer {
+
+    constructor(options) {
+        // e.g. connect to Web USB 
+    }
+    ...
+
+    static get capabilities() {
+        return {
+            frequency: {
+                min: 1,
+                max: 100,
+                default: 10
+            },
+            ...
+        }
+    }
+
+    _onDataFromMySensor(in) {
+        ...
+        this.onreading(out)
+    }
+
+    _onError(reason) {
+        ...
+        this.onerror(err)
+    }
+
+    ...
+}
+navigator.sensors.register(MyAccelSensor)
+```
+
+### Example #3: Connect/disconnect
+
+Pre-approved sensors (or sensor types, possibly), when registered and unregistered/disconnected.
+
+```javascript
+navigator.sensors.addEventListener('connect', evt => handleConnectSensor);
+navigator.sensors.addEventListener('disconnect', evt => handleDisconnectSensor);
+```
 
 ## Generic Actuator
 Sensors only cover half of the interaction with the physical world.  Often
