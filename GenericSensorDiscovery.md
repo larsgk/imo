@@ -8,10 +8,12 @@ a great foundation for unified interaction with device sensors, finally!
 
 However, in my work with empiriKit (a science lab in a box) and with 
 hardware to web connectivity work done with industry partners, I strongly
-believe that sensor discovery - and even a potential 'Generic Actuator API' - would enable application developers to support many more real world scenarios.
+believe that sensor discovery - and even a potential 'Generic Actuator API' - 
+would enable application developers to support many more real world scenarios.
 
 With Web USB and Web Bluetooth, it will be possible
-to attach/detach hardware and it would be natural to be able to register/deregister potential sensors (and actuators) dynamically.
+to attach/detach hardware and it would be natural to be able to register/deregister 
+potential sensors (and actuators) dynamically.
 
 This doc will contain a small collection of cases and snippets as input
 for discussion.
@@ -41,10 +43,37 @@ As a quality inspector, I'd want to be able to walk through a storage facility
 sensor beacon data and dynamically register/deregister sensors as I move.
 
 ### Case #4: Home automation
-Given that BLE Mesh implementations for home automation is moving now it would only be natural if a web app connecting to a node in the house would be able to discover and interact with the sensors and actuators available.  Allowing 
+Given that BLE Mesh implementations for home automation is moving now it would 
+only be natural if a web app connecting to a node in the house would be able to 
+discover and interact with the sensors and actuators available.  Allowing 
 dynamic registration/deregistration in the Generic Sensor (and Actuator) context
 will provide app developers a generalized and portable approach to interacting
 with home automation units (thermostats, lights, environmental readings, etc.).
+
+## Snippets
+
+### Example #1: Listing
+
+In general, sensors connected via Web USB or Web Bluetooth have already gone 
+through a user gesture driven permission approval flow.  With that in mind,
+one could argue that sensors connected via these mechanisms and added by the web
+application, should not require a subsequent permission granting dialog.
+This would include listing of available sensors, which could return a
+merge of pre-approved built-in generic sensors and sensors added by the web
+application.
+
+```javascript
+const accelArray = navigator.sensors.getSensors({filters:[{type:"accelerometer"}]);
+```
+
+### Example #2: Registration
+
+UNDER INVESTIGATION:
+
+TODO: Look into how e.g. Streams API can be used to provide high-bandwidth support
+for e.g. high speed accelerometers in parallel with CustomEvent support for 
+low-bandwidth sensors (geolocation, temperature, etc.).
+
 
 ## Generic Actuator
 Sensors only cover half of the interaction with the physical world.  Often
