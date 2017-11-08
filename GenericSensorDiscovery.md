@@ -107,7 +107,7 @@ class MyWebUSBAccelSensor extends Accelerometer {
 
     ...
 }
-navigator.sensors.register(MyAccelSensor)
+navigator.sensors.register(MyWebUSBAccelSensor)
 ```
 
 ### Example #3: Connect/disconnect
