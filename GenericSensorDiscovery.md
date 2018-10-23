@@ -50,10 +50,16 @@ dynamic registration/deregistration in the Generic Sensor (and Actuator) context
 will provide app developers a generalized and portable approach to interacting
 with home automation units (thermostats, lights, environmental readings, etc.).
 
-## Snippets
+### Case #5: Industrial monitoring (enterprise)
+Companies like BKSV create high precision sensors used under development and monitoring
+of e.g. plane engines, factories, windmills, etc..  A typical installation can include
+anything from 10 to 100s of sensors and automatic addition/registration and placement of those
+would add great value.
 
-### Example #1: Listing
 
+## Thoughts and ideas
+
+### Listing
 In general, sensors connected via Web USB or Web Bluetooth have already gone 
 through a user gesture driven permission approval flow.  With that in mind,
 one could argue that sensors connected via these mechanisms and added by the web
@@ -66,15 +72,31 @@ application.
 const accelArray = await navigator.sensors.getSensors({filters:[{type:"accelerometer"}]);
 ```
 
-### Example #2: Registration
+### Sensor location and orientation
+External sensors - especially for industry use - needs to include information about location
+and orientation (depending on the sensor type).  Most probably, there is an overlap with work
+done for Geolocation and WebXR.
 
-// UNDER INVESTIGATION
+### Web NFC
+Using NFC (with a possible fallback to QR codes?) for initial registration will introduce an intuitive
+secure physical action to give the app permission to communicate with sensors and actuators.
+The payload will include information on connectivity (e.g. Web USB or Web Bluetooth), type, location,
+orientation, etc..
+First time use displays a permission dialog (to cover all in the bundle, including potentially multiple
+Web Bluetooth and Web USB connections).  Subsequent use connects immediatly.
 
-TODO: Look into how e.g. Streams API can be used to provide high-bandwidth support
-for e.g. high speed accelerometers in parallel with CustomEvent support for 
-low-bandwidth sensors (geolocation, temperature, etc.).
+E.g. in the case of veichle monitoring, tapping the device on an NFC tag on the dashboard would allow 
+communication with the car's GPS (and dead reckoning) system, tire pressure, temperature and engine sensors.
+Tapping again will break communication.
 
-(TBD: can be multi-purpose/combo)
+### Processiong data
+E.g Streams API can be used to provide high-bandwidth support
+for high speed accelerometers in parallel with CustomEvent support for 
+low-bandwidth sensors (geolocation, temperature, etc.). There should be a 
+low friction path for data to flow through WebML or other GPU/DSP accelerated technology.
+
+### Manually add and register
+It should be possible to manually register sensors.
 
 ```javascript
 class MyWebUSBAccelSensor extends Accelerometer {
@@ -97,21 +119,16 @@ class MyWebUSBAccelSensor extends Accelerometer {
 
     _onDataFromMySensor(in) {
         ...
-        this.onreading(out)
-    }
-
-    _onError(reason) {
-        ...
-        this.onerror(err)
+        this.onreading()
     }
 
     ...
 }
+...
 navigator.sensors.register(MyWebUSBAccelSensor)
 ```
 
-### Example #3: Connect/disconnect
-
+### Connect/disconnect
 Pre-approved sensors (or sensor types, possibly), when registered and unregistered/disconnected.
 
 ```javascript
@@ -133,5 +150,3 @@ changes to sensor readings, e.g. 'temperature dropped below X' or 'someone
 opened my door (BLE mesh accelerometer)', it would (?) require a mechanism for
 the service worker to give a notification and potentially wake up the monitoring
 web application.
-
-
