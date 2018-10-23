@@ -1,6 +1,7 @@
 # Sensor Discovery for Generic Sensor API
 
 2017-11-07: First draft (initial cases)
+2017-10-23: Add NFC/QR initiation & industry example
 
 The Generic Sensor API spec (https://w3c.github.io/sensors/) and 
 derivaties (e.g. https://www.w3.org/TR/orientation-sensor/) provide
